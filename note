@@ -1,0 +1,14 @@
+b2b
+running ssh at 4242 port and make root can't connect with ssh:
+	change in /etc/ssh/sshd_config
+	PermitRootLogin no
+make port 4242 allow in firewall:
+	sudo ufw allow 4242/tcp
+manage groups :
+	sudo groupadd namegroup
+	sudo usermod -aG groupname username
+	sudo deluser username groupname
+	sudo groupdel name
+manage users:
+	sudo useradd username or sudo useradd -m username
+	                                                       
