@@ -55,7 +55,7 @@ mac_address=$(cat /sys/class/net/eth0/address)
 sudo_cmd_count=$(journalctl -u sudo | wc -l)
 
 # Display the information
-echo "Broadcast message from root@$(hostname) (tty1) ($(date)):"
+echo "Broadcast message from root@$(hostname) ($(w|grep ?|awk '{print $2}')) ($(date)):"
 echo "#Architecture: $architecture $hostname $kernel_version $architecture GNU/Linux"
 echo "#CPU physical : $physical_processors"
 echo "#vCPU : $virtual_processors"
