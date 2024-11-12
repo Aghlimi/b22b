@@ -2,3 +2,4 @@ wall "Broadcast message from root@$(hostname) ($(who | awk '{print $2}' | head -
 
 # Your custom message here
 "
+
