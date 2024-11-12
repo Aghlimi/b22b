@@ -1,14 +1,14 @@
 #!/bin/bash
 total=$(free -mt|grep ^Total|awk '{print $2}');
-used=c;
-prsnt=$(awk "BEGIN {printf \"%.2f\", ($used / $total) * 100}")
+used=$(free -mt|grep ^Total|awk '{print $2}');
+mem=$(awk "BEGIN {printf \"%.2f\", ($used / $total) * 100}")
 
 echo "
 Broadcast message from root@wil (tty1) (Sun Apr 25 15:45:00 2021):
         #Architecture: $(uname -a)
         #CPU physical : $(lscpu | grep -c '^Core(s) per socket:')
         #vCPU : $(lscpu | grep -c '^CPU(s):')
-        #Memory Usage: $(free -mt|grep ^Total|awk '{print $2}')/$(free -mt|grep ^Total|awk '{print $2}')MB ($(awk "BEGIN {printf \"%.2f\", ($used / $total) * 100}")%)
+        #Memory Usage: $used/$totalMB ($mem%)
         #Disk Usage: 1009/2Gb (49%)
         #CPU load: 6.7%
         #Last boot: 2021-04-25 14:45
