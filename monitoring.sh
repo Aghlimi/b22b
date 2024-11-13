@@ -53,9 +53,10 @@ mac_address=$(cat /sys/class/net/eth0/address)
 
 # Get sudo command count
 sudo_cmd_count=$(journalctl -u sudo | wc -l)
-
+tty= $(w|grep w |  awk '{print $2}')
+echo $tty
 # Display the information
-echo "Broadcast message from $(howami)@$(hostname) ($(w|grep ?|awk '{print $2}')) ($(date)):"
+echo "Broadcast message from $(whoami)@$(hostname) ($tty) ($(date)):"
 echo "#Architecture: $architecture $hostname $kernel_version $architecture GNU/Linux"
 echo "#CPU physical : $physical_processors"
 echo "#vCPU : $virtual_processors"
