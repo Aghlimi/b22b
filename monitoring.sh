@@ -34,8 +34,7 @@ sudo_cmd_count=$(cat /var/log/sudo/sudo.log | grep -c COMMAND=)
 
 tty= $(w|grep w |  awk '{print $2}')
 
-echo "
-Broadcast message from root@wil (tty1) (Sun Apr 25 15:45:00 2021):
+wall  "
         #Architecture: $architecture $hostname $kernel_version $architecture GNU/Linux
         #CPU physical : $physical_processors
         #vCPU : $virtual_processors
