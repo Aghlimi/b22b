@@ -39,7 +39,7 @@ cpu_load=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk 
 last_boot=$(uptime -s)
 
 # Check if LVM is active
-lvm_status=$(lsblk | grep lvm)
+lvm_status=$(if [ "$g" -ne 0 ]; then     echo "yes"; else     echo "no"; fi)
 
 # Get active connections
 active_connections=$(ss -tuln | grep -c ':4242')
@@ -63,7 +63,7 @@ echo "#vCPU : $virtual_processors"
 echo "#Memory Usage: $used_memory/$total_memory MB ($mem_usage%)"
 echo "#CPU load: $cpu_load"
 echo "#Last boot: $last_boot"
-echo "#LVM use: ${lvm_status:+yes}"
+echo "#LVM use: ${lvm_status}"
 echo "#Connections TCP : $active_connections"
 echo "#User log: $users_logged_in"
 echo "#Network: IP $ip_address ($mac_address)"
