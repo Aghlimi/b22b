@@ -49,10 +49,10 @@ users_logged_in=$(who | wc -l)
 
 # Get IPv4 and MAC address
 ip_address=$(hostname -I | awk '{print $1}')
-mac_address=$(cat /sys/class/net/eth0/address)
+mac_address=$(ip a | grep -w link/ether | awk '{print $2}')
 
 # Get sudo command count
-sudo_cmd_count=$(journalctl -u sudo | wc -l)
+sudo_cmd_count=$(cat /var/log/sudo/sudo.log | grep -c COMMAND=)
 tty= $(w|grep w |  awk '{print $2}')
 echo $tty
 # Display the information
