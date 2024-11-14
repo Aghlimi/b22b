@@ -39,7 +39,7 @@ cpu_load=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk 
 last_boot=$(uptime -s)
 
 # Check if LVM is active
-lvm_status=if [ -n "$(lsblk |awk '{print $6}' |grep lvm)" ];then echo $text; else echo "is empty"; fi
+lvm_status=$(if [ -n "$(lsblk |awk '{print $6}' |grep lvm)" ];then echo $text; else echo "is empty"; fi)
 
 # Get active connections
 active_connections=$(ss -tuln | grep -c ':4242')
