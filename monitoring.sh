@@ -26,7 +26,14 @@ physical_processors=$(grep "^core id" /proc/cpuinfo | sort -u | wc -l)
 
 # Get the number of virtual processors
 virtual_processors=$(grep -c "^processor" /proc/cpuinfo)
-
+lvm() {
+    g=$(lsblk | awk '{print $6}' | grep lvm)
+    if [ -z "$g" ]; then
+        echo "no"
+    else
+        echo "yes"
+    fi
+}
 # Get total and used memory
 total_memory=$(free -mt | grep ^Total | awk '{print $2}')
 used_memory=$(free -mt | grep ^Total | awk '{print $3}')
@@ -39,7 +46,7 @@ cpu_load=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk 
 last_boot=$(uptime -s)
 
 # Check if LVM is active
-lvm_status=$(if [ -n "$(lsblk |awk '{print $6}' |grep lvm)" ];then echo $text; else echo "is empty"; fi)
+lvm_status=$(lvm)
 
 # Get active connections
 active_connections=$(ss -tuln | grep -c ':4242')
