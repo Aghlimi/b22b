@@ -19,3 +19,5 @@ manage users:
 	sudo chage -l username
 change hostname
 	sudo hostnamectl set-hostname new-hostname
+password requisite pam_pwquality.so retry=3 minlen=10 minclass=3 maxrepeat=3
+password requisite pam_unix.so difok=7 remember=5
