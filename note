@@ -15,4 +15,6 @@ manage groups :
 	sudo groupdel name
 manage users:
 	sudo useradd username or sudo useradd -m username
-	                                                       
+	sudo usermod -l new_username old_username
+	sudo userdel username
+	sudo chage -l username
