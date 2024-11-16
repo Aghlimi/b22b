@@ -21,3 +21,15 @@ change hostname
 	sudo hostnamectl set-hostname new-hostname
 password requisite pam_pwquality.so retry=3 minlen=10 minclass=3 maxrepeat=3
 password requisite pam_unix.so difok=7 remember=5
+sql
+	create user and give it permission
+		CREATE DATABASE wordpress;
+		CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'your_password';
+		GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'localhost';
+		FLUSH PRIVILEGES;
+		EXIT;
+	create table
+		CREATE TABLE tasks (
+    			id INT AUTO_INCREMENT PRIMARY KEY,
+    			task VARCHAR(255) NOT NULL
+		);
