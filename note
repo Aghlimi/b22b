@@ -1,7 +1,7 @@
 b2b
 
 MAKE user as sudo:
-	username ALL=(ALL:ALL)
+	username ALL=(ALL:ALL) ALL
 running ssh at 4242 port and make root can't connect with ssh:
 	change in /etc/ssh/sshd_config
 	PermitRootLogin no
