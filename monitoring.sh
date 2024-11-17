@@ -1,4 +1,6 @@
 #!/bin/bash
+#while true; do
+#	sleep 600
 architecture=$(uname -m)
 kernel_version=$(uname -r)
 
@@ -39,7 +41,7 @@ wall  "
         #CPU physical : $physical_processors
         #vCPU : $virtual_processors
         #Memory Usage: $used_memory/$total_memory MB ($mem_usage%) MB ($mem_usage%)
-       >>> #Disk Usage: $(df -m --total|grep total | awk '{print $3}')/$(df -h --total|grep total | awk '{print $2}')b ($(df -h --total|grep total | awk '{print $5}'))
+        #Disk Usage: $(df -m --total|grep total | awk '{print $3}')/$(df -h --total|grep total | awk '{print $2}')b ($(df -h --total|grep total | awk '{print $5}'))
         #CPU load:$cpu_load
         #Last boot: $last_boot
         #LVM use: $lvm_status
@@ -48,3 +50,4 @@ wall  "
         #Network: IP $ip_address ($mac_address)
         #Sudo : $sudo_cmd_count cmd
 "
+#done
