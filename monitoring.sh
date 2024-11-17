@@ -17,15 +17,15 @@ lvm() {
 }
 total_memory=$(free -mt | grep ^Total | awk '{print $2}')
 used_memory=$(free -mt | grep ^Total | awk '{print $3}')
-mem_usage=$(awk "BEGIN {printf \"%.2f\", ($used_memory / $total_memory) * 100}")
+mem_usage=$(echo "$used_memory $total_memory"|awk '{print ($1 / $2) * 100}')
 
-cpu_load=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
+cpu_load=$(top -bn1|grep "Cpu(s)" | cut -d ':' -f 2 | tr ',' '\n' | grep id |awk '{print 100 - $1"%"}')
 
 last_boot=$(uptime -s)
 
 lvm_status=$(lvm)
 
-active_connections=$(ss -tuln | grep -c ':4242')
+active_connections=$(ss -tuln | grep -c 'LISTEN')
 
 users_logged_in=$(who | wc -l)
 
@@ -37,7 +37,7 @@ sudo_cmd_count=$(cat /var/log/sudo/sudo.log | grep -c COMMAND=)
 tty= $(w|grep w |  awk '{print $2}')
 
 wall  "
-        #Architecture: $architecture $hostname $kernel_version $architecture GNU/Linux
+	#Architecture: $(uname -a)
         #CPU physical : $physical_processors
         #vCPU : $virtual_processors
         #Memory Usage: $used_memory/$total_memory MB ($mem_usage%) MB ($mem_usage%)
