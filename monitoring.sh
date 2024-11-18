@@ -1,12 +1,7 @@
 #!/bin/bash
-#while true; do
-#	sleep 600
-architecture=$(uname -m)
-kernel_version=$(uname -r)
+physical_processors=$(nproc --all)
 
-physical_processors=$(grep "^core id" /proc/cpuinfo | sort -u | wc -l)
-
-virtual_processors=$(grep -c "^processor" /proc/cpuinfo)
+virtual_processors=$(nproc)
 lvm() {
     g=$(lsblk | awk '{print $6}' | grep lvm)
     if [ -z "$g" ]; then
@@ -15,8 +10,8 @@ lvm() {
         echo "yes"
     fi
 }
-total_memory=$(free -mt | grep ^Total | awk '{print $2}')
-used_memory=$(free -mt | grep ^Total | awk '{print $3}')
+total_memory=$(free -m | grep ^Mem | awk '{print $2}')
+used_memory=$(free -m | grep ^Mem | awk '{print $3}')
 mem_usage=$(echo "$used_memory $total_memory"|awk '{print ($1 / $2) * 100}')
 
 cpu_load=$(top -bn1|grep "Cpu(s)" | cut -d ':' -f 2 | tr ',' '\n' | grep id |awk '{print 100 - $1"%"}')
@@ -25,16 +20,14 @@ last_boot=$(uptime -s)
 
 lvm_status=$(lvm)
 
-active_connections=$(ss -tuln | grep -c 'LISTEN')
+active_connections=$(( $(ss -tn state established | wc -l) -1 ))
 
 users_logged_in=$(who | wc -l)
 
-ip_address=$(hostname -I | awk '{print $1}')
+ip_address=$(hostname -I)
 mac_address=$(ip a | grep -w link/ether | awk '{print $2}')
 
 sudo_cmd_count=$(cat /var/log/sudo/sudo.log | grep -c COMMAND=)
-
-tty= $(w|grep w |  awk '{print $2}')
 
 wall  "
 	#Architecture: $(uname -a)
@@ -50,4 +43,3 @@ wall  "
         #Network: IP $ip_address ($mac_address)
         #Sudo : $sudo_cmd_count cmd
 "
-#done
