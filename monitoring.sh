@@ -1,6 +1,5 @@
 #!/bin/bash
 physical_processors=$(nproc --all)
-
 virtual_processors=$(nproc)
 lvm() {
     g=$(lsblk | awk '{print $6}' | grep lvm)
@@ -13,22 +12,14 @@ lvm() {
 total_memory=$(free -m | grep ^Mem | awk '{print $2}')
 used_memory=$(free -m | grep ^Mem | awk '{print $3}')
 mem_usage=$(echo "$used_memory $total_memory"|awk '{print ($1 / $2) * 100}')
-
 cpu_load=$(top -bn1|grep "Cpu(s)" | cut -d ':' -f 2 | tr ',' '\n' | grep id |awk '{print 100 - $1"%"}')
-
 last_boot=$(uptime -s)
-
 lvm_status=$(lvm)
-
 active_connections=$(( $(ss -tn state established | wc -l) -1 ))
-
 users_logged_in=$(who | wc -l)
-
 ip_address=$(hostname -I)
 mac_address=$(ip a | grep -w link/ether | awk '{print $2}')
-
 sudo_cmd_count=$(cat /var/log/sudo/sudo.log | grep -c COMMAND=)
-
 wall  "
 	#Architecture: $(uname -a)
         #CPU physical : $physical_processors
